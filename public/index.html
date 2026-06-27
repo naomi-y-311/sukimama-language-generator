@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>歌詞和訳 下書き作成</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,500,0,0">
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <main class="app">
+      <section class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Local Draft Tool</p>
+            <h1>歌詞和訳 下書き作成</h1>
+          </div>
+          <div class="topbar-actions">
+            <label class="password-field">共有パスワード
+              <input name="appPassword" type="password" autocomplete="current-password" placeholder="設定した場合のみ">
+            </label>
+            <button class="ghost" id="sampleButton" type="button">サンプル</button>
+          </div>
+        </header>
+
+        <form id="draftForm" class="form">
+          <div class="panel">
+            <h2>曲情報</h2>
+            <div class="grid two">
+              <label>曲名
+                <input name="songTitle" required placeholder="거짓말">
+              </label>
+              <label>英題・別タイトル
+                <input name="altTitle" placeholder="LIE">
+              </label>
+              <label>アーティスト名
+                <input name="artist" required placeholder="육성재">
+              </label>
+              <label>アーティスト日本語表記
+                <input name="artistJa" placeholder="ユク・ソンジェ(BTOB)">
+              </label>
+              <label>アルバム
+                <input name="album" placeholder="アルバム名">
+              </label>
+              <label>作詞者
+                <input name="lyricist" placeholder="作詞者名">
+              </label>
+              <label>原曲言語
+                <select name="language">
+                  <option>混在</option>
+                  <option>韓国語</option>
+                  <option>英語</option>
+                </select>
+              </label>
+              <label>YouTube URL
+                <input name="youtubeUrl" type="url" placeholder="https://www.youtube.com/watch?v=...">
+              </label>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-title">
+              <h2>歌詞</h2>
+              <p>広告を入れたい位置には、単独行で <code>[AD]</code> と入力してください。</p>
+            </div>
+            <textarea name="lyrics" required spellcheck="false" placeholder="歌詞を貼り付け"></textarea>
+            <label class="check">
+              <input name="includeNotes" type="checkbox">
+              <span>注釈を必要な行だけ入れる</span>
+            </label>
+          </div>
+
+          <div class="actions">
+            <button class="primary" id="generateButton" type="submit">HTML生成</button>
+            <p id="status" role="status"></p>
+          </div>
+        </form>
+      </section>
+
+      <aside class="preview">
+        <div class="result-header">
+          <div>
+            <p class="eyebrow">WordPress</p>
+            <h2>生成結果</h2>
+          </div>
+          <div class="copy-actions">
+            <button class="ghost" id="copyTitleButton" type="button" disabled><span class="material-symbols-rounded" aria-hidden="true">content_copy</span>タイトル</button>
+            <button class="ghost" id="copyHtmlButton" type="button" disabled><span class="material-symbols-rounded" aria-hidden="true">content_copy</span>本文HTML</button>
+          </div>
+        </div>
+        <label>記事タイトル
+          <input id="postTitle" readonly>
+        </label>
+        <label>本文HTML
+          <textarea id="htmlOutput" readonly spellcheck="false"></textarea>
+        </label>
+      </aside>
+    </main>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>
