@@ -9,12 +9,6 @@ const sampleButton = document.querySelector("#sampleButton");
 const toast = document.querySelector("#toast");
 let toastTimer;
 
-form.appPassword.value = localStorage.getItem("sukimamaAppPassword") || "";
-
-form.appPassword.addEventListener("input", () => {
-  localStorage.setItem("sukimamaAppPassword", form.appPassword.value);
-});
-
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
   setBusy(true, "生成しています...");
@@ -23,7 +17,6 @@ form.addEventListener("submit", async (event) => {
     const formData = new FormData(form);
     const payload = {
       lyrics: formData.get("lyrics"),
-      appPassword: formData.get("appPassword"),
       meta: {
         songTitle: formData.get("songTitle"),
         altTitle: formData.get("altTitle"),
