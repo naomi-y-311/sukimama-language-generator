@@ -37,6 +37,3 @@ VercelのEnvironment Variablesには以下を設定します。
 
 - `OPENAI_API_KEY`: OpenAI APIキー
 - `OPENAI_MODEL`: 通常は `gpt-5.4-nano`
-- `APP_PASSWORD`: 家族共有用の任意パスワード。空ならパスワードなし
-
-`APP_PASSWORD` を設定した場合、画面右上の「共有パスワード」に同じ文字列を入れると生成できます。
