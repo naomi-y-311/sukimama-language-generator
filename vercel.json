@@ -23,6 +23,10 @@
       "dest": "/public/index.html"
     },
     {
+      "src": "/songs-todo",
+      "dest": "/public/todo.html"
+    },
+    {
       "src": "/(.*)",
       "dest": "/public/$1"
     }
