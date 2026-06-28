@@ -29,7 +29,7 @@ const server = http.createServer(async (req, res) => {
     }
 
     if (req.method === "GET") {
-      const filePath = url.pathname === "/" ? "/public/index.html" : `/public${url.pathname}`;
+      const filePath = getPublicFilePath(url.pathname);
       const fullPath = path.normalize(path.join(__dirname, filePath));
 
       if (!fullPath.startsWith(path.join(__dirname, "public"))) {
@@ -49,6 +49,12 @@ const server = http.createServer(async (req, res) => {
   }
 });
 
+function getPublicFilePath(pathname) {
+  if (pathname === "/") return "/public/index.html";
+  if (pathname === "/songs-todo") return "/public/todo.html";
+  return `/public${pathname}`;
+}
+
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   server.listen(PORT, HOST, () => {
     console.log(`Local app: http://${HOST}:${PORT}`);
@@ -56,23 +62,10 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
 }
 
 export async function generateDraft(body, headers = {}) {
-  assertAuthorized(body, headers);
   const translationResult = await translateLyrics(body);
   const title = buildPostTitle(body.meta);
   const html = buildWordPressHtml(body.meta, translationResult.lines, body.options || {});
   return { title, html, translated: translationResult.lines, stats: translationResult.stats };
-}
-
-function assertAuthorized(body, headers) {
-  const password = process.env.APP_PASSWORD;
-  if (!password) return;
-
-  const provided = headers["x-app-password"] || headers["X-App-Password"] || body.appPassword;
-  if (provided !== password) {
-    const error = new Error("共有パスワードを入力してください。");
-    error.status = 401;
-    throw error;
-  }
 }
 
 function loadDotEnv() {
