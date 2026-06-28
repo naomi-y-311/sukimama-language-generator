@@ -6,6 +6,7 @@
     <title>歌詞和訳 下書き作成</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,500,0,0">
     <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/todo.css">
   </head>
   <body>
     <main class="app">
@@ -17,6 +18,46 @@
           </div>
           <button class="ghost" id="sampleButton" type="button">サンプル</button>
         </header>
+
+        <section class="panel todo-panel" aria-labelledby="todoTitle">
+          <div class="panel-title">
+            <h2 id="todoTitle">やりたい曲リスト</h2>
+            <p>アーティスト名と曲名だけでも追加できます。</p>
+          </div>
+
+          <form id="todoForm" class="todo-form">
+            <input type="hidden" name="todoId">
+            <div class="grid two">
+              <label>アーティスト名
+                <input name="todoArtist" required placeholder="NewJeans">
+              </label>
+              <label>曲名
+                <input name="todoSongTitle" required placeholder="Ditto">
+              </label>
+              <label>アーティスト日本語表記
+                <input name="todoArtistJa" placeholder="ニュージーンズ">
+              </label>
+              <label>英題・別タイトル
+                <input name="todoAltTitle" placeholder="別タイトル">
+              </label>
+              <label>アルバム名
+                <input name="todoAlbum" placeholder="アルバム名">
+              </label>
+              <label>作詞
+                <input name="todoLyricist" placeholder="作詞者名">
+              </label>
+            </div>
+            <label>メモ
+              <textarea class="compact-textarea" name="todoMemo" placeholder="気になる点、収録情報、あとで調べることなど"></textarea>
+            </label>
+            <div class="todo-actions">
+              <button class="primary" id="todoSaveButton" type="submit">リストに追加</button>
+              <button class="ghost" id="todoCancelButton" type="button" hidden>編集をやめる</button>
+            </div>
+          </form>
+
+          <div class="todo-list" id="todoList" aria-live="polite"></div>
+        </section>
 
         <form id="draftForm" class="form">
           <div class="panel">
@@ -51,6 +92,9 @@
                 <input name="youtubeUrl" type="url" placeholder="https://www.youtube.com/watch?v=...">
               </label>
             </div>
+            <label class="wide-field">メモ
+              <textarea class="compact-textarea" name="memo" placeholder="リストから反映したメモ、作業メモなど"></textarea>
+            </label>
           </div>
 
           <div class="panel">
