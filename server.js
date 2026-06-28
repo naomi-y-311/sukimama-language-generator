@@ -120,7 +120,7 @@ async function translateLyrics(body) {
 
   const numberedLyrics = uniqueLyrics.map((line, index) => `${index + 1}. ${line.text}`).join("\n");
   const notesInstruction = body.options?.includeNotes
-    ? "必要な行だけ、短い日本語の注釈をnoteに入れてください。不要な場合は空文字にしてください。"
+    ? "必要な行だけ、短い日本語の補足文をnoteに入れてください。noteは「※」「注釈：」などの見出しや箇条書きにせず、そのまま本文として読める一文にしてください。不要な場合は空文字にしてください。"
     : "noteは常に空文字にしてください。";
 
   const response = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -307,8 +307,8 @@ function buildWordPressHtml(meta = {}, translatedLines = [], options = {}) {
     "<!-- wp:paragraph -->",
     `<p>作詞者：${escapeHtml(meta.lyricist || "")}</p>`,
     "<!-- /wp:paragraph --></div>",
-    "<!-- /wp:cocoon-blocks/column-right --></div>",
-    "<!-- /wp:cocoon-blocks/column-2 -->",
+    "<!-- wp:cocoon-blocks/column-right --></div>",
+    "<!-- wp:cocoon-blocks/column-2 -->",
     "",
     "<!-- wp:block {\"ref\":13761} /-->"
   ]
@@ -351,8 +351,8 @@ function buildLyricsHtml(lines, includeNotes) {
     parts.push("");
 
     if (includeNotes && line.note) {
-      parts.push("<!-- wp:paragraph -->");
-      parts.push(`<p>※ 注釈：${escapeHtml(line.note)}</p>`);
+      parts.push("<!-- wp:paragraph {\"extraStyle\":\"memo-box\"} -->");
+      parts.push(`<p class="is-style-memo-box has-box-style">${escapeHtml(line.note)}</p>`);
       parts.push("<!-- /wp:paragraph -->");
       parts.push("");
     }
