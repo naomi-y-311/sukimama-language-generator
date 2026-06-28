@@ -1,5 +1,24 @@
-.todo-panel {
-  margin-bottom: 16px;
+.single-page {
+  min-height: 100vh;
+  padding: 22px;
+}
+
+.todo-page-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1.05fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.todo-list-panel {
+  position: sticky;
+  top: 22px;
+  max-height: calc(100vh - 44px);
+  overflow: auto;
+}
+
+.nav-button {
+  text-decoration: none;
 }
 
 .todo-form {
@@ -100,11 +119,20 @@
   min-height: 76px;
 }
 
-.wide-field {
-  margin-top: 13px;
-}
-
 @media (max-width: 640px) {
+  .single-page {
+    padding: 12px;
+  }
+
+  .todo-page-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .todo-list-panel {
+    position: static;
+    max-height: none;
+  }
+
   .todo-item {
     grid-template-columns: auto minmax(0, 1fr);
   }
