@@ -243,10 +243,11 @@ function buildPostTitle(meta = {}) {
 function buildWordPressHtml(meta = {}, translatedLines = [], options = {}) {
   const lyricHtml = buildLyricsHtml(translatedLines, options.includeNotes);
   const mvBlock = meta.youtubeUrl ? buildYoutubeBlock(meta.youtubeUrl) : "";
+  const displaySongTitle = compactJoin([meta.songTitle, meta.altTitle], " / ");
 
   return [
     "<!-- wp:heading -->",
-    `<h2 class="wp-block-heading">曲名：${escapeHtml(meta.songTitle || "")}</h2>`,
+    `<h2 class="wp-block-heading">曲名：${escapeHtml(displaySongTitle)}</h2>`,
     "<!-- /wp:heading -->",
     "",
     "<!-- wp:cocoon-blocks/column-2 {\"extraBottomMargin\":\"2\"} -->",
