@@ -7,7 +7,10 @@ const copyHtmlButton = document.querySelector("#copyHtmlButton");
 const generateButton = document.querySelector("#generateButton");
 const sampleButton = document.querySelector("#sampleButton");
 const toast = document.querySelector("#toast");
+const PENDING_DRAFT_KEY = "sukimamaPendingDraft";
 let toastTimer;
+
+applyPendingDraft();
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -102,4 +105,29 @@ function showToast(message) {
   toastTimer = setTimeout(() => {
     toast.classList.remove("show");
   }, 1800);
+}
+
+function applyPendingDraft() {
+  const item = readPendingDraft();
+  if (!item) return;
+  applySongToDraftForm(item);
+  localStorage.removeItem(PENDING_DRAFT_KEY);
+  showToast("曲情報に反映しました");
+}
+
+function readPendingDraft() {
+  try {
+    return JSON.parse(localStorage.getItem(PENDING_DRAFT_KEY) || "null");
+  } catch {
+    return null;
+  }
+}
+
+function applySongToDraftForm(item) {
+  form.artist.value = item.artist;
+  form.songTitle.value = item.songTitle;
+  form.artistJa.value = item.artistJa;
+  form.altTitle.value = item.altTitle;
+  form.album.value = item.album;
+  form.lyricist.value = item.lyricist;
 }
