@@ -5,7 +5,6 @@ const htmlOutput = document.querySelector("#htmlOutput");
 const copyTitleButton = document.querySelector("#copyTitleButton");
 const copyHtmlButton = document.querySelector("#copyHtmlButton");
 const generateButton = document.querySelector("#generateButton");
-const sampleButton = document.querySelector("#sampleButton");
 const toast = document.querySelector("#toast");
 const PENDING_DRAFT_KEY = "sukimamaPendingDraft";
 let toastTimer;
@@ -64,27 +63,6 @@ copyTitleButton.addEventListener("click", async () => {
 
 copyHtmlButton.addEventListener("click", async () => {
   await copyText(htmlOutput.value);
-});
-
-sampleButton.addEventListener("click", () => {
-  form.songTitle.value = "거짓말";
-  form.altTitle.value = "LIE";
-  form.artist.value = "육성재";
-  form.artistJa.value = "ユク・ソンジェ(BTOB)";
-  form.album.value = "All About Blue";
-  form.lyricist.value = "作詞者名";
-  form.language.value = "混在";
-  form.youtubeUrl.value = "https://www.youtube.com/watch?v=example";
-  form.lyrics.value = [
-    "항상 그랬었어 언제나 불안했어",
-    "결국 너를 잃어버릴까 봐",
-    "",
-    "[AD]",
-    "",
-    "내 가슴 깊숙이 새겨두었던 그 말",
-    "변치 않겠다는 그 거짓말",
-    "I don't wanna let you go"
-  ].join("\n");
 });
 
 function setBusy(isBusy, message = "") {
