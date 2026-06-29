@@ -621,6 +621,12 @@ button:disabled {
   background: rgba(255, 255, 255, 0.045);
 }
 
+#excerptOutput {
+  min-height: 78px;
+  resize: vertical;
+  background: rgba(255, 255, 255, 0.045);
+}
+
 #htmlOutput {
   flex: 1;
   min-height: 0;

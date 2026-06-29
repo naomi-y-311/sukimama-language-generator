@@ -86,11 +86,15 @@
           </div>
           <div class="copy-actions">
             <button class="ghost" id="copyTitleButton" type="button" disabled><span class="material-symbols-rounded" aria-hidden="true">content_copy</span>タイトル</button>
+            <button class="ghost" id="copyExcerptButton" type="button" disabled><span class="material-symbols-rounded" aria-hidden="true">content_copy</span>抜粋</button>
             <button class="ghost" id="copyHtmlButton" type="button" disabled><span class="material-symbols-rounded" aria-hidden="true">content_copy</span>本文HTML</button>
           </div>
         </div>
         <label>記事タイトル
           <input id="postTitle" readonly>
+        </label>
+        <label>抜粋／metaディスクリプション
+          <textarea id="excerptOutput" readonly spellcheck="false"></textarea>
         </label>
         <label>本文HTML
           <textarea id="htmlOutput" readonly spellcheck="false"></textarea>
