@@ -29,7 +29,7 @@ const server = http.createServer(async (req, res) => {
     }
 
     if (req.method === "GET") {
-      const filePath = url.pathname === "/" ? "/public/index.html" : `/public${url.pathname}`;
+      const filePath = getPublicFilePath(url.pathname);
       const fullPath = path.normalize(path.join(__dirname, filePath));
 
       if (!fullPath.startsWith(path.join(__dirname, "public"))) {
@@ -48,6 +48,12 @@ const server = http.createServer(async (req, res) => {
     sendJson(res, { error: error.message || "Unexpected error" }, error.status || 500);
   }
 });
+
+function getPublicFilePath(pathname) {
+  if (pathname === "/") return "/public/index.html";
+  if (pathname === "/songs-todo") return "/public/todo.html";
+  return `/public${pathname}`;
+}
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   server.listen(PORT, HOST, () => {
