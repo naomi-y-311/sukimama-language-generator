@@ -307,8 +307,8 @@ function buildWordPressHtml(meta = {}, translatedLines = [], options = {}) {
     "<!-- wp:paragraph -->",
     `<p>作詞者：${escapeHtml(meta.lyricist || "")}</p>`,
     "<!-- /wp:paragraph --></div>",
-    "<!-- wp:cocoon-blocks/column-right --></div>",
-    "<!-- wp:cocoon-blocks/column-2 -->",
+    "<!-- /wp:cocoon-blocks/column-right --></div>",
+    "<!-- /wp:cocoon-blocks/column-2 -->",
     "",
     "<!-- wp:block {\"ref\":13761} /-->"
   ]
