@@ -65,8 +65,9 @@ export async function generateDraft(body, headers = {}) {
   assertAuthorized(body, headers);
   const translationResult = await translateLyrics(body);
   const title = buildPostTitle(body.meta);
+  const excerpt = buildMetaDescription(body.meta);
   const html = buildWordPressHtml(body.meta, translationResult.lines, body.options || {});
-  return { title, html, translated: translationResult.lines, stats: translationResult.stats };
+  return { title, excerpt, html, translated: translationResult.lines, stats: translationResult.stats };
 }
 
 function assertAuthorized(body, headers) {
@@ -238,6 +239,14 @@ function buildPostTitle(meta = {}) {
   const song = compactJoin([meta.songTitle, meta.altTitle], " / ");
   const artist = compactJoin([meta.artist, meta.artistJa], " / ");
   return `【歌詞和訳】${compactJoin([song, artist], " - ")}`;
+}
+
+function buildMetaDescription(meta = {}) {
+  const artist = compactJoin([meta.artist, meta.artistJa], " / ");
+  const song = compactJoin([meta.songTitle, meta.altTitle], " / ");
+  const album = String(meta.album || "").trim();
+  const albumText = album && album !== "シングル配信" ? `（アルバム：${album}）` : "";
+  return `${artist}「${song}」${albumText}の日本語訳。カナルビなし。｜好きな曲の歌詞で語学を勉強したいオタクのサイト「すきままLanguage」`;
 }
 
 function buildWordPressHtml(meta = {}, translatedLines = [], options = {}) {

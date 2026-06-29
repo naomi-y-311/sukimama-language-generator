@@ -1,8 +1,10 @@
 const form = document.querySelector("#draftForm");
 const statusText = document.querySelector("#status");
 const postTitle = document.querySelector("#postTitle");
+const excerptOutput = document.querySelector("#excerptOutput");
 const htmlOutput = document.querySelector("#htmlOutput");
 const copyTitleButton = document.querySelector("#copyTitleButton");
+const copyExcerptButton = document.querySelector("#copyExcerptButton");
 const copyHtmlButton = document.querySelector("#copyHtmlButton");
 const generateButton = document.querySelector("#generateButton");
 const toast = document.querySelector("#toast");
@@ -43,8 +45,10 @@ form.addEventListener("submit", async (event) => {
     if (!response.ok) throw new Error(data.error || "生成できませんでした。");
 
     postTitle.value = data.title;
+    excerptOutput.value = data.excerpt;
     htmlOutput.value = data.html;
     copyTitleButton.disabled = false;
+    copyExcerptButton.disabled = false;
     copyHtmlButton.disabled = false;
     const stats = data.stats;
     statusText.textContent = stats
@@ -59,6 +63,10 @@ form.addEventListener("submit", async (event) => {
 
 copyTitleButton.addEventListener("click", async () => {
   await copyText(postTitle.value);
+});
+
+copyExcerptButton.addEventListener("click", async () => {
+  await copyText(excerptOutput.value);
 });
 
 copyHtmlButton.addEventListener("click", async () => {
