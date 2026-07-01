@@ -11,12 +11,20 @@
       "config": {
         "maxDuration": 60
       }
+    },
+    {
+      "src": "api/todos.js",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/api/generate",
       "dest": "/api/generate.js"
+    },
+    {
+      "src": "/api/todos",
+      "dest": "/api/todos.js"
     },
     {
       "src": "/",
