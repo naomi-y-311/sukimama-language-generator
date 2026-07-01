@@ -119,6 +119,10 @@
   line-height: 1.5;
 }
 
+.empty-list.is-error {
+  color: var(--warm);
+}
+
 .todo-item-actions {
   display: flex;
   gap: 8px;
