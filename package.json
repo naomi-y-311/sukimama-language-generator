@@ -6,6 +6,9 @@
   "scripts": {
     "start": "node server.js"
   },
+  "dependencies": {
+    "firebase-admin": "^13.0.0"
+  },
   "engines": {
     "node": ">=20"
   }

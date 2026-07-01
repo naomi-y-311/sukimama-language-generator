@@ -3,6 +3,7 @@ import { readFile } from "node:fs/promises";
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { listTodos, upsertTodo } from "./lib/todoStore.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = Number(process.env.PORT || 4173);
@@ -15,6 +16,7 @@ const mimeTypes = {
   ".html": "text/html; charset=utf-8",
   ".css": "text/css; charset=utf-8",
   ".js": "text/javascript; charset=utf-8",
+  ".txt": "text/plain; charset=utf-8",
   ".json": "application/json; charset=utf-8"
 };
 
@@ -26,6 +28,19 @@ const server = http.createServer(async (req, res) => {
       const body = await readJson(req);
       const draft = await generateDraft(body, req.headers);
       return sendJson(res, draft);
+    }
+
+    if (url.pathname === "/api/todos") {
+      if (req.method === "GET") {
+        const items = await listTodos();
+        return sendJson(res, { items });
+      }
+
+      if (req.method === "PUT" || req.method === "POST") {
+        const body = await readJson(req);
+        const item = await upsertTodo(body.item || body);
+        return sendJson(res, { item });
+      }
     }
 
     if (req.method === "GET") {
