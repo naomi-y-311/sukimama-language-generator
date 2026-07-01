@@ -2,12 +2,18 @@ const todoForm = document.querySelector("#todoForm");
 const todoList = document.querySelector("#todoList");
 const todoSaveButton = document.querySelector("#todoSaveButton");
 const todoCancelButton = document.querySelector("#todoCancelButton");
+const todoOptionalFields = document.querySelector("#todoOptionalFields");
+const todoSearchInput = document.querySelector("#todoSearchInput");
+const hideCompletedInput = document.querySelector("#hideCompletedInput");
 const toast = document.querySelector("#toast");
 const TODO_STORAGE_KEY = "sukimamaSongTodos";
 const PENDING_DRAFT_KEY = "sukimamaPendingDraft";
+const MOBILE_QUERY = "(max-width: 640px)";
+const mobileMedia = window.matchMedia(MOBILE_QUERY);
 let toastTimer;
 let songTodos = [];
 
+syncOptionalFields();
 initSongTodos();
 
 todoForm.addEventListener("submit", async (event) => {
@@ -56,6 +62,11 @@ todoForm.addEventListener("submit", async (event) => {
 });
 
 todoCancelButton.addEventListener("click", resetTodoForm);
+
+todoSearchInput.addEventListener("input", renderSongTodos);
+hideCompletedInput.addEventListener("change", renderSongTodos);
+
+mobileMedia.addEventListener("change", syncOptionalFields);
 
 todoList.addEventListener("click", (event) => {
   const actionButton = event.target.closest("[data-action]");
@@ -158,7 +169,13 @@ function renderSongTodos() {
     return;
   }
 
-  todoList.innerHTML = songTodos
+  const visibleTodos = getVisibleSongTodos();
+  if (visibleTodos.length === 0) {
+    todoList.innerHTML = '<p class="empty-list">条件に合う曲がありません。</p>';
+    return;
+  }
+
+  todoList.innerHTML = visibleTodos
     .map((item) => {
       const id = escapeHtml(item.id);
       const title = escapeHtml(item.songTitle);
@@ -200,6 +217,7 @@ function editTodo(item) {
   todoForm.todoAlbum.value = item.album;
   todoForm.todoLyricist.value = item.lyricist;
   todoForm.todoMemo.value = item.memo;
+  todoOptionalFields.open = true;
   todoSaveButton.textContent = "更新";
   todoCancelButton.hidden = false;
   todoForm.todoArtist.focus();
@@ -210,12 +228,42 @@ function resetTodoForm() {
   todoForm.todoId.value = "";
   todoSaveButton.textContent = "リストに追加";
   todoCancelButton.hidden = true;
+  syncOptionalFields();
 }
 
 function setFormBusy(isBusy) {
   todoSaveButton.disabled = isBusy;
   todoCancelButton.disabled = isBusy;
   todoSaveButton.textContent = isBusy ? "保存中" : todoForm.todoId.value ? "更新" : "リストに追加";
+}
+
+function getVisibleSongTodos() {
+  const query = normalizeSearchText(todoSearchInput.value);
+  const shouldHideCompleted = hideCompletedInput.checked;
+
+  return songTodos.filter((item) => {
+    if (shouldHideCompleted && item.completed) return false;
+    if (!query) return true;
+
+    return [item.songTitle, item.altTitle, item.artist, item.artistJa]
+      .map(normalizeSearchText)
+      .some((value) => value.includes(query));
+  });
+}
+
+function normalizeSearchText(value) {
+  return String(value || "").replaceAll("　", " ").trim().toLowerCase();
+}
+
+function syncOptionalFields() {
+  if (!mobileMedia.matches) {
+    todoOptionalFields.open = true;
+    return;
+  }
+
+  if (!todoForm.todoId.value) {
+    todoOptionalFields.open = false;
+  }
 }
 
 function showToast(message) {
