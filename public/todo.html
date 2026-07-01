@@ -38,22 +38,32 @@
               <label>曲名
                 <input name="todoSongTitle" required placeholder="Ditto">
               </label>
-              <label>アーティスト日本語表記
-                <input name="todoArtistJa" placeholder="ニュージーンズ">
-              </label>
-              <label>英題・別タイトル
-                <input name="todoAltTitle" placeholder="別タイトル">
-              </label>
-              <label>アルバム名
-                <input name="todoAlbum" placeholder="アルバム名">
-              </label>
-              <label>作詞
-                <input name="todoLyricist" placeholder="作詞者名">
-              </label>
             </div>
-            <label>メモ
-              <textarea class="compact-textarea" name="todoMemo" placeholder="気になる点、収録情報、あとで調べることなど"></textarea>
-            </label>
+            <details class="todo-optional-fields" id="todoOptionalFields">
+              <summary>
+                <span>任意項目</span>
+                <span class="material-symbols-rounded" aria-hidden="true">expand_more</span>
+              </summary>
+              <div class="todo-optional-body">
+                <div class="grid two">
+                  <label>アーティスト日本語表記
+                    <input name="todoArtistJa" placeholder="ニュージーンズ">
+                  </label>
+                  <label>英題・別タイトル
+                    <input name="todoAltTitle" placeholder="別タイトル">
+                  </label>
+                  <label>アルバム名
+                    <input name="todoAlbum" placeholder="アルバム名">
+                  </label>
+                  <label>作詞
+                    <input name="todoLyricist" placeholder="作詞者名">
+                  </label>
+                </div>
+                <label>メモ
+                  <textarea class="compact-textarea" name="todoMemo" placeholder="気になる点、収録情報、あとで調べることなど"></textarea>
+                </label>
+              </div>
+            </details>
             <div class="todo-actions">
               <button class="primary" id="todoSaveButton" type="submit">リストに追加</button>
               <button class="ghost" id="todoCancelButton" type="button" hidden>編集をやめる</button>
@@ -64,6 +74,15 @@
         <section class="panel todo-list-panel" aria-labelledby="todoListTitle">
           <div class="panel-title">
             <h2 id="todoListTitle">リスト</h2>
+          </div>
+          <div class="todo-filter-bar">
+            <label class="todo-search">検索
+              <input id="todoSearchInput" type="search" placeholder="曲名・英題・アーティスト名">
+            </label>
+            <label class="check todo-filter-check">
+              <input id="hideCompletedInput" type="checkbox">
+              完了済みを除く
+            </label>
           </div>
           <div class="todo-list" id="todoList" aria-live="polite"></div>
         </section>
